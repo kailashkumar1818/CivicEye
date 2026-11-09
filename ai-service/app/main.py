@@ -45,7 +45,7 @@ async def health_check():
     """
     Health check endpoint. Returns status and model load status.
     """
-    model_loaded = detector.model is not None or os.path.exists(settings.model_path) or True
+    model_loaded = detector.model is not None or os.path.exists(settings.model_path)
     return {
         "status": "ok",
         "model_loaded": model_loaded,
