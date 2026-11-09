@@ -136,10 +136,10 @@ export async function checkDbHealth() {
       return res.rows[0]?.healthy === 1;
     } catch {
       postgresOnline = false;
-      return true;
+      return false;
     }
   }
-  return true;
+  return false;
 }
 
 export default {
