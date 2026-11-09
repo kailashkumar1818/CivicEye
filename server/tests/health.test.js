@@ -1,6 +1,14 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import request from 'supertest';
-import app from '../src/app.js';
+
+let app;
+
+beforeEach(async () => {
+  vi.resetModules();
+  process.env.NODE_ENV = 'test';
+  const mod = await import('../src/app.js');
+  app = mod.default;
+});
 
 describe('Health Checks', () => {
   it('GET /api/health should respond with status code and system metrics', async () => {
@@ -18,4 +26,3 @@ describe('Health Checks', () => {
     expect(res.body).toHaveProperty('status');
   });
 });
-

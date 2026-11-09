@@ -1,0 +1,21 @@
+// Test environment setup - must run before any app imports
+process.env.NODE_ENV = 'test';
+process.env.PORT = '5001';
+process.env.DATABASE_URL = 'postgresql://test:test@localhost:5432/test';
+process.env.DB_SSL = 'false';
+process.env.CORS_ORIGINS = 'http://localhost:5173';
+process.env.JWT_ACCESS_SECRET = 'test_access_secret_key_min_32_characters_for_testing';
+process.env.JWT_REFRESH_SECRET = 'test_refresh_secret_key_min_32_characters_for_testing';
+process.env.JWT_ACCESS_EXPIRY = '15m';
+process.env.JWT_REFRESH_EXPIRY = '7d';
+process.env.AI_SERVICE_URL = 'http://localhost:8000';
+process.env.AI_SERVICE_API_KEY = 'test_ai_api_key_secret_12345';
+process.env.AI_REQUEST_TIMEOUT_MS = '10000';
+process.env.CLOUDINARY_CLOUD_NAME = '';
+process.env.CLOUDINARY_API_KEY = '';
+process.env.CLOUDINARY_API_SECRET = '';
+process.env.SMTP_HOST = '';
+process.env.SMTP_PORT = '587';
+process.env.SMTP_USER = '';
+process.env.SMTP_PASS = '';
+process.env.EMAIL_FROM = 'CivicEye <no-reply@civiceye.local>';

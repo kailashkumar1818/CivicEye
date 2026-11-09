@@ -56,19 +56,22 @@ const healthHandler = async (req, res) => {
   const dbHealthy = await checkDbHealth();
   const dbStatus = dbHealthy ? 'up' : 'down';
 
+  // Skip AI service check in test mode to avoid external calls
   let aiStatus = 'down';
-  try {
-    const aiResponse = await axios.get(`${env.AI_SERVICE_URL}/health`, {
-      timeout: Math.min(env.AI_REQUEST_TIMEOUT_MS, 3000),
-      headers: {
-        'X-API-Key': env.AI_SERVICE_API_KEY,
-      },
-    });
-    if (aiResponse.status === 200 && aiResponse.data?.status === 'ok') {
-      aiStatus = 'up';
+  if (env.NODE_ENV !== 'test') {
+    try {
+      const aiResponse = await axios.get(`${env.AI_SERVICE_URL}/health`, {
+        timeout: Math.min(env.AI_REQUEST_TIMEOUT_MS, 3000),
+        headers: {
+          'X-API-Key': env.AI_SERVICE_API_KEY,
+        },
+      });
+      if (aiResponse.status === 200 && aiResponse.data?.status === 'ok') {
+        aiStatus = 'up';
+      }
+    } catch {
+      aiStatus = 'down';
     }
-  } catch {
-    aiStatus = 'down';
   }
 
   // Overall status: ok if both up, degraded if DB up but AI down, down if DB down

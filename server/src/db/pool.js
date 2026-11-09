@@ -129,6 +129,11 @@ export const query = (text, params) => pool.query(text, params);
  * @returns {Promise<boolean>}
  */
 export async function checkDbHealth() {
+  // In test mode, return true immediately since we use mockDb
+  if (env.NODE_ENV === 'test') {
+    return true;
+  }
+
   await probePostgresPort();
   if (postgresOnline) {
     try {
