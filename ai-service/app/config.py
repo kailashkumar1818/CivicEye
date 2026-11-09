@@ -10,6 +10,7 @@ class Settings(BaseSettings):
     model_path: str = "models/civiceye-yolov8n.pt"
     confidence_threshold: float = 0.4
     device: str = "cpu"
+    environment: str = "development"
 
     class Config:
         env_file = ".env"
