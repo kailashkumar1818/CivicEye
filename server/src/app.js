@@ -71,8 +71,14 @@ const healthHandler = async (req, res) => {
     aiStatus = 'down';
   }
 
-  const overallStatus = dbHealthy ? 'ok' : 'degraded';
-  const statusCode = 200;
+  // Overall status: ok if both up, degraded if DB up but AI down, down if DB down
+  let overallStatus = 'down';
+  if (dbHealthy && aiStatus === 'up') {
+    overallStatus = 'ok';
+  } else if (dbHealthy && aiStatus === 'down') {
+    overallStatus = 'degraded';
+  }
+  const statusCode = dbHealthy ? 200 : 503;
 
   return res.status(statusCode).json({
     success: true,
